@@ -1,19 +1,20 @@
-    <link rel="stylesheet" href="app.css">
-    <title>Document</title>
 
+  
 
-<body>
+<x-layout>
+
     <article>
 <h1>
-  <?= $post->title; ?>
+  {{ $post->title }}
 </h1>
     <div>
-      <?= $post->body; ?>
+ {!! $post->body !!}
     </div>
 
     </article>
 
     <a href="/posts">go back</a>
-</body>
 
-</html>
+</x-layout>
+
+
