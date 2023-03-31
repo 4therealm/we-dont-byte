@@ -2,7 +2,7 @@
 <head>
 
   <title>my blog</title
-    <link href="{{ asset('/public/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
 
 </head>
 
@@ -10,5 +10,3 @@
   <body>
     {{ $slot }}
   </body>
-
-</html>
