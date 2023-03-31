@@ -6,26 +6,24 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+//import the request class
+use Illuminate\Http\Request;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 
 
 Route::get('/posts', function () {
+  $posts = Post::latest();
+  if (request('search')) {
+      $posts->where('title', 'like', '%' . request('search') . '%')
+          ->orWhere('body', 'like', '%' . request('search') . '%');
+  }
   return view('posts', [
-      'posts' => Post::latest()->get()
+      'posts' => $posts->get(),
+      'categories' => Category::all()
   ]);
 });
+
 Route::get('posts/{post:slug}', function (Post $post) {// Post::where('slug', $post)->firstOrFail
   return view('post', [
     'post' => $post
@@ -41,3 +39,11 @@ Route::get('/authors/{author:username}', function (User $author) {
       'posts' => $author->posts->load('category', 'author')
   ]);
 });
+Route::get('/posts/search', function () {
+ dd(request('search'));
+  // $search = request('search');
+  // return view('posts', [
+  //     'posts' => Post::search($search)->get()
+  // ]);
+});
+
